@@ -12,5 +12,5 @@ from strings import str_compare
 # print(check_even_or_odd(6))
 # print(check_even_or_odd(5))
 
-print(str_compare("cat", "dog"))
-print(str_compare("cat", "cat"))
+# print(str_compare("cat", "dog"))
+# print(str_compare("cat", "cat"))
