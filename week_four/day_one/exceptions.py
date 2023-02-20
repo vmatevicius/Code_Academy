@@ -1,7 +1,7 @@
 # Create at least 5 different functions and try to handle at least 5 built-in Python Exceptions.
 import sys
 
-def catching_key_exception(dictionary):
+def catching_key_exception(dictionary: dict):
     
     try:
         return dictionary["key"]
@@ -15,10 +15,10 @@ def catching_type_error(number):
     except TypeError:
         sys.exit("Input is not a number")
         
-def catching_zero_division_error(number):
+def catching_zero_division_error(number_one, number_two):
     
     try:
-        return 50 / number
+        return number_one / number_two
     except ZeroDivisionError:
         sys.exit("Divison by 0 is not available")
         
