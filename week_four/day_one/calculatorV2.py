@@ -19,41 +19,49 @@ def main():
     else:
         print("Operator does not exist")
     
-def divide(x, y):
+def divide(x: int | float, y: int | float) -> int | float:
     
     try:
-        return round(float(x) / float(y), 2)
+        return x / y
     except ValueError:
         sys.exit("Wrong value")
     except TypeError:
         sys.exit("Wrong type")
+    except Exception as e:
+        sys.exit(f"Error : {e}")
         
-def multiply(x, y):
+def multiply(x: int | float, y: int | float) -> int | float:
 
     try:
-        return round(float(x) * float(y), 2)
+        return x * y
     except ValueError:
         sys.exit("Wrong value")
     except TypeError:
         sys.exit("Wrong type")
+    except Exception as e:
+        sys.exit(f"Error : {e}")
 
-def sum_up(x, y):
+def sum_up(x: int | float, y: int | float) -> int | float: 
 
     try:
-        return round(float(x) + float(y), 1)
+        return x + y
     except ValueError:
         sys.exit("Wrong value")
     except TypeError:
         sys.exit("Wrong type")
+    except Exception as e:
+        sys.exit(f"Error : {e}")
 
-def subtraction(x, y):
+def subtraction(x: int | float, y: int | float) -> int | float:
     
     try:
-        return round(float(x) - float(y), 1)
+        return x - y
     except ValueError:
         sys.exit("Wrong value")
     except TypeError:
         sys.exit("Wrong type")
+    except Exception as e:
+        sys.exit(f"Error : {e}")
 
 if __name__ == "__main__":
     main()

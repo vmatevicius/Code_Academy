@@ -6,7 +6,7 @@ figlet = Figlet()
 
 fonts = figlet.getFonts()
 
-def transform_text(text, font_name=None) -> str:
+def transform_text(text: str, font_name: str=None) -> str:
     
     '''If font name is known, add second arg if not font will be random'''    
     
@@ -19,6 +19,8 @@ def transform_text(text, font_name=None) -> str:
         changed_text = figlet.renderText(text)
     except TypeError:
         sys.exit("Wrong type of input")
+    except Exception as e:
+        sys.exit(f"Error : {e}")
     else:
         return changed_text
         

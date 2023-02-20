@@ -13,14 +13,16 @@ def main():
     
     print(transform_text(user_text))
 
-def transform_text(text):
+def transform_text(text: str) -> str:
 
     font_name = random.choice(fonts)
     figlet.setFont(font=font_name)
     try:
         changed_text = figlet.renderText(text)
     except TypeError:
-        sys.exit("Wrong type of input")
+        sys.exit("Wrong argument type")
+    except Exception as e:
+        sys.exit(f"Error : {e}")
     else:
         return changed_text
     finally:
