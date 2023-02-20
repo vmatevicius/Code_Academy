@@ -1,7 +1,7 @@
 # Create a function what would include full cycle of error handling (try/except/else/finally) with real world scenario example.
 from pyfiglet import Figlet
 import random
-import sys
+from typing import Optional
 
 figlet = Figlet()
 
@@ -13,16 +13,16 @@ def main():
     
     print(transform_text(user_text))
 
-def transform_text(text: str) -> str:
+def transform_text(text: str) -> Optional[str]:
 
     font_name = random.choice(fonts)
     figlet.setFont(font=font_name)
     try:
         changed_text = figlet.renderText(text)
     except TypeError:
-        sys.exit("Wrong argument type")
+        print("Wrong argument type")
     except Exception as e:
-        sys.exit(f"Error : {e}")
+        print(f"Error : {e}")
     else:
         return changed_text
     finally:

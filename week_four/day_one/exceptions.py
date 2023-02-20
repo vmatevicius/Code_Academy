@@ -1,39 +1,53 @@
 # Create at least 5 different functions and try to handle at least 5 built-in Python Exceptions.
+from typing import Optional
 import sys
 
-def catching_key_exception(dictionary: dict):
+def greet_someone(name: str= "Human") -> Optional[str]:
     
     try:
-        return dictionary["key"]
-    except KeyError:
-        sys.exit("Key does not exist")
+        return f"Hello {name}"
+    except Exception as e:
+        sys.exit(f"Error : {e}")
+
+# print(greet_someone())
         
-def catching_type_error(number: int | float ) -> int | float:
+def multiply_numbers(number_one: int | float, number_two: int | float ) -> Optional[int | float]:
     
     try:
-        return number * number
+        return number_one * number_two
     except TypeError:
-        sys.exit("Input is not a number")
+        print("Input is not a number")
         
-def catching_zero_division_error(number_one: int | float, number_two: int | float) -> int | float:
+# multiply("cat")
+        
+def divide_numbers(number_one: int | float, number_two: int | float) -> Optional[int | float]:
     
     try:
         return number_one / number_two
     except ZeroDivisionError:
-        sys.exit("Divison by 0 is not available")
+        print("Divison by 0 is not available")
         
-def catching_name_error(text: str) -> None:
+# divide(5,0)
+        
+def verify_user(username: str) -> Optional[bool]:
     
+    VALID_USERNAME = "Antanas"
     try:
-        return calculate_lenght(text)
+        if username == valid_username:
+            return True
+        return False
     except NameError:
-        sys.exit("Name is not defined")
+        print("Name is not defined")
         
-def catch_keyboard_interrupt_error() -> None:
+# print(verify_user("Antanas"))
+
+def uppercase_user_input() -> Optional[str]:
     
     try:
-        while True:
-            print("meow")
+        user_input = input("Enter anything: ")
+        return user_input.upper()
     except KeyboardInterrupt:
-        sys.exit("Program stopped of keyboard interruption")
+        print("\n Program stopped of keyboard interruption")
+
+# print(uppercase_user_input())
         
