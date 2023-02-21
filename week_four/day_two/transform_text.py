@@ -1,12 +1,12 @@
 from pyfiglet import Figlet
 import random
-import sys
+from typing import Optional
 
 figlet = Figlet()
 
 fonts = figlet.getFonts()
 
-def transform_text(text: str, font_name: str=None) -> str:
+def transform_text(text: str, font_name: str=None) -> Optional[str]:
     
     '''If font name is known, add second arg if not font will be random'''    
     
@@ -18,9 +18,9 @@ def transform_text(text: str, font_name: str=None) -> str:
     try:
         changed_text = figlet.renderText(text)
     except TypeError:
-        sys.exit("Wrong type of input")
+        print("Wrong type of input")
     except Exception as e:
-        sys.exit(f"Error : {e}")
+        print(f"Error : {e}")
     else:
         return changed_text
         

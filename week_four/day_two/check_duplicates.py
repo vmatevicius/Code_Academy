@@ -1,6 +1,6 @@
-import sys
+from typing import Optional
 
-def check_duplicate_values(list_of_values: list) -> bool:
+def check_duplicate_values(list_of_values: list) -> Optional[bool]:
 
     '''If duplicate found returns True, else False'''
     try:
@@ -18,4 +18,4 @@ def check_duplicate_values(list_of_values: list) -> bool:
                     index += 1
             i += 1
     except Exception as e:
-        sys.exit(f"Error : {e}")
+        print(f"Error : {e}")

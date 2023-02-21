@@ -1,45 +1,45 @@
-import sys
+from typing import Optional
 
-def divide(x: int | float, y: int | float) -> int | float:
+def divide(x: int | float, y: int | float) -> Optional[float]:
     
     try:
         return x / y
     except ValueError:
-        sys.exit("Wrong value")
+        print("Wrong value")
     except TypeError:
-        sys.exit("Wrong type")
+        print("Wrong type")
     except Exception as e:
-        sys.exit(f"Error : {e}")
+        print(f"Error : {e}")
         
-def multiply(x: int | float, y: int | float) -> int | float:
+def multiply(x: int | float, y: int | float) ->Optional[int | float]:
 
     try:
         return x * y
     except ValueError:
-        sys.exit("Wrong value")
+        print("Wrong value")
     except TypeError:
-        sys.exit("Wrong type")
+        print("Wrong type")
     except Exception as e:
-        sys.exit(f"Error : {e}")
+        print(f"Error : {e}")
 
-def sum_up(x: int | float, y: int | float) -> int | float: 
+def sum_up(x: int | float, y: int | float) -> Optional[int | float]: 
 
     try:
         return x + y
     except ValueError:
-        sys.exit("Wrong value")
+        print("Wrong value")
     except TypeError:
-        sys.exit("Wrong type")
+        print("Wrong type")
     except Exception as e:
-        sys.exit(f"Error : {e}")
+        print(f"Error : {e}")
 
-def subtraction(x: int | float, y: int | float) -> int | float:
+def subtraction(x: int | float, y: int | float) -> Optional[int | float]:
     
     try:
         return x - y
     except ValueError:
-        sys.exit("Wrong value")
+        print("Wrong value")
     except TypeError:
-        sys.exit("Wrong type")
+        print("Wrong type")
     except Exception as e:
-        sys.exit(f"Error : {e}")
+        print(f"Error : {e}")

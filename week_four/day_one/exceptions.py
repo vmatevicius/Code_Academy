@@ -1,6 +1,5 @@
 # Create at least 5 different functions and try to handle at least 5 built-in Python Exceptions.
 from typing import Optional
-import sys
 
 def greet_someone(name: str= "Human") -> Optional[str]:
     
@@ -20,7 +19,7 @@ def multiply_numbers(number_one: int | float, number_two: int | float ) -> Optio
         
 # multiply("cat")
         
-def divide_numbers(number_one: int | float, number_two: int | float) -> Optional[int | float]:
+def divide_numbers(number_one: int | float, number_two: int | float) -> Optional[float]:
     
     try:
         return number_one / number_two

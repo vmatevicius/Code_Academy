@@ -1,12 +1,11 @@
-import sys
-
-def check_even_or_odd(number: int | float) -> str:
+from typing import Optional
+def check_even_or_odd(number: int | float) -> Optional[str]:
     
     try:
         if number % 2 == 0:
             return "even"
         return "odd"
     except TypeError:
-        sys.exit("Argument must be an integer")
+        print("Argument must be an integer")
     except Exception as e:
-        sys.exit(f"Error : {e}")
+        print(f"Error : {e}")
