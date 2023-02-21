@@ -8,6 +8,7 @@ from strings import str_compare
 
 # print(check.check_duplicate_values(["cat","dog","cow"]))
 # print(check.check_duplicate_values([1,2,3,4,5,5,6]))
+# print(check.check_duplicate_values([5,6,7,8,9,10,5]))
 
 # print(check_even_or_odd(6))
 # print(check_even_or_odd(5))
