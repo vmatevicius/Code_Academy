@@ -22,5 +22,5 @@ class Employee():
         last_name = input("Enter last name: ")
         return cls(first_name, last_name)
     
-worker = Employee("vytautas", "matevicius")
+worker = Employee("Vytautas", "Matevicius")
 print(worker.email)
