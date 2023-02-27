@@ -27,7 +27,7 @@ class Book():
             self.title = title
             self.author = author
         except Exception as e:
-            logging.error(f"Error recieved: {e}")
+            logging.error(f"Error recieved when setting book obj. values. {e}")
             
     @classmethod
     def get_book(cls):
@@ -36,16 +36,22 @@ class Book():
         return cls(title, author)
     
     def __str__(self) -> str:
-        return f"Title: {self.title}, Author: {self.author}"
-        
+        try:
+            return f"Title: {self.title}, Author: {self.author}"
+        except Exception as e:
+            logging.error(f"Error recieved when calling __str__. {e}")
     def get_title(self) -> str:
-        
-        return f"Title: {self.title}"
-    
+        try:
+            return f"Title: {self.title}"
+        except Exception as e:
+            logging.error(f"Error recieved when calling get_title. {e}")
     def get_author(self) -> str:
-        
-        return f"Author: {self.author}"
-    
+        try:
+            return f"Author: {self.author}"
+        except Exception as e:
+            logging.error(f"Error recieved when calling get_author. {e}")
+            
+            
 PP = Book("Pride and Prejudice", "Jane Austen")
 H = Book.get_book()
 print(H)

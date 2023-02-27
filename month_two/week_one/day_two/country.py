@@ -25,7 +25,7 @@ class Country():
             self.population = population
             self.area = area
         except Exception as e:
-            logging.error(f"Error recieved. {e}")
+            logging.error(f"Error recieved when setting country obj. values. {e}")
             
     def __str__(self) -> str:
         
@@ -39,18 +39,22 @@ class Country():
         return cls(name, population, area)
             
     def is_big(self) -> bool:
-        
-        if self.population > 250000000 or self.area > 3000000:
-            return True
-        return False
-    
+        try:
+            if self.population > 250000000 or self.area > 3000000:
+                return True
+            return False
+        except Exception as e:
+            logging.error(f"Error recieved when calling is_big. {e}")
+            
     def compare_pd(self, country) -> str:
         # compare population density
-        if (self.population / self.area) > (country.population / country.area):
-            return f"{self.name} has a higher population density than {country.name}"
-        else:
-            return f"{country.name} has a higher population density than {self.name}"
-
+        try:
+            if (self.population / self.area) > (country.population / country.area):
+                return f"{self.name} has a higher population density than {country.name}"
+            else:
+                return f"{country.name} has a higher population density than {self.name}"
+        except Exception as e:
+            logging.error(f"Error recieved when calling compare_pd. {e}")
     
 australia = Country("Australia", 23545500, 7692024)
 andorra = Country("Andorra", 76098, 468)

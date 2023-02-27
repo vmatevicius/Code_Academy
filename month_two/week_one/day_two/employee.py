@@ -14,7 +14,7 @@ class Employee():
             self.fullname = f"{first_name} {last_name}"
             self.email = f"{first_name.lower()}.{last_name.lower()}@company.com"
         except Exception as e:
-            logging.error(f"Error recieved. {e}")
+            logging.error(f"Error recieved when setting employee obj. values. {e}")
             
     @classmethod
     def get(cls):

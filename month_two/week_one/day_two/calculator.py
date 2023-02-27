@@ -8,6 +8,7 @@ class Calculator:
     def __init__(self, number_one:Union[int, float], number_two:Union[int, float]):
         logging.info(f"Recieved values when creating a calculator object. number_one: {number_one}, number_two: {number_two}")
         if type(number_one) and type(number_two) not in [int, float]:
+            logging.error(f"type error recieved when setting calculator obj. values.")
             raise TypeError("Wrong input type")
         self.number_one = number_one
         self.number_two = number_two
@@ -22,23 +23,23 @@ class Calculator:
         try:
             return self.number_one + self.number_two
         except Exception as e:
-            logging.error(f"Error occured. {e}")
+            logging.error(f"Error recieved when calling add. {e}")
     def divide(self) -> Optional[float]:
         try:
             return self.number_one / self.number_two
         except Exception as e:
-            logging.error(f"Error occured. {e}")
+            logging.error(f"Error recieved when calling divide. {e}")
         
     def multiply(self) -> Optional[Union[int, float]]:
         try: 
             return self.number_one * self.number_two
         except Exception as e:
-            logging.error(f"Error occured. {e}")
+            logging.error(f"Error recieved when calling multiply. {e}")
     def subtract(self) -> Optional[Union[int, float]]:
         try:
             return self.number_one - self.number_two
         except Exception as e:
-            logging.error(f"Error occured. {e}")
+            logging.error(f"Error recieved when calling subtract. {e}")
     
-calculator = Calculator(5, "meow")
+calculator = Calculator(5, 20)
 print(f"Addition: {calculator.add()}, Subtraction: {calculator.subtract()}, Division: {calculator.divide()}, Multiplication: {calculator.multiply()} ")
