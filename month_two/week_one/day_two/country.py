@@ -43,7 +43,7 @@ class Country():
         except Exception as e:
             logging.error(f"Error recieved when calling is_big. {e}")
             
-    def compare_population_density(self, country) -> str:
+    def compare_population_density(self, country: str) -> str:
         try:
             if (self.population / self.area) > (country.population / country.area):
                 return f"{self.name} has a higher population density than {country.name}"

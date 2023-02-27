@@ -8,6 +8,7 @@ class Calculator:
     def __init__(self, number_one:Union[int, float], number_two:Union[int, float]):
         logging.info(f"Recieved values when creating a calculator object. number_one: {number_one}, number_two: {number_two}")
         if type(number_one) and type(number_two) not in [int, float]:
+            logging.error(f"TypeError recieved when creating calculator obj.")
             raise TypeError("Wrong input type")
         self.number_one = number_one
         self.number_two = number_two
