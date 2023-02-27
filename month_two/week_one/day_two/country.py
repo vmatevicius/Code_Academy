@@ -43,7 +43,7 @@ class Country():
         except Exception as e:
             logging.error(f"Error recieved when calling is_big. {e}")
             
-    def compare_pd(self, country) -> str:
+    def compare_population_density(self, country) -> str:
         # compare population density
         try:
             if (self.population / self.area) > (country.population / country.area):
@@ -61,5 +61,5 @@ wonderland = Country.get()
 print(wonderland)
 print(australia.is_big())
 print(andorra.is_big())
-print(andorra.compare_pd(athens))
+print(andorra.compare_population_density(athens))
     
