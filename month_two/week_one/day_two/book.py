@@ -23,11 +23,8 @@ class Book():
     
     def __init__(self, title: str, author: str):
         logging.info(f"Recieved values when creating a book ojbect. title: {title}, author: {author}")
-        try:
-            self.title = title
-            self.author = author
-        except Exception as e:
-            logging.error(f"Error recieved when setting book obj. values. {e}")
+        self.title = title
+        self.author = author
             
     @classmethod
     def get_book(cls):

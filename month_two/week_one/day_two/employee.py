@@ -10,11 +10,8 @@ class Employee():
     
     def __init__(self, first_name: str, last_name: str):
         logging.info(f"Recieved values when creating an employee. first name: {first_name}, last name: {last_name}")
-        try:
-            self.fullname = f"{first_name} {last_name}"
-            self.email = f"{first_name.lower()}.{last_name.lower()}@company.com"
-        except Exception as e:
-            logging.error(f"Error recieved when setting employee obj. values. {e}")
+        self.fullname = f"{first_name} {last_name}"
+        self.email = f"{first_name.lower()}.{last_name.lower()}@company.com"
             
     @classmethod
     def get(cls):

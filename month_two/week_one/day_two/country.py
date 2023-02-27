@@ -20,12 +20,9 @@ class Country():
     
     def __init__(self,name: str, population: int, area: Union[int,float]):
         logging.info(f"Recieved values when creating a country object. population: {population}, area: {area}")
-        try:
-            self.name = name
-            self.population = population
-            self.area = area
-        except Exception as e:
-            logging.error(f"Error recieved when setting country obj. values. {e}")
+        self.name = name
+        self.population = population
+        self.area = area
             
     def __str__(self) -> str:
         
