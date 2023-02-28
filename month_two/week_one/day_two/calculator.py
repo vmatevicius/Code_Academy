@@ -20,26 +20,18 @@ class Calculator:
         return cls(number_one, number_two)
     
     def add(self) -> Optional[Union[int, float]]:
-        try:
-            return self.number_one + self.number_two
-        except Exception as e:
-            logging.error(f"Error recieved when calling add. {e}")
+        return self.number_one + self.number_two
+        
     def divide(self) -> Optional[float]:
-        try:
-            return self.number_one / self.number_two
-        except Exception as e:
-            logging.error(f"Error recieved when calling divide. {e}")
+        return self.number_one / self.number_two
         
     def multiply(self) -> Optional[Union[int, float]]:
-        try: 
-            return self.number_one * self.number_two
-        except Exception as e:
-            logging.error(f"Error recieved when calling multiply. {e}")
+        return self.number_one * self.number_two
+        
     def subtract(self) -> Optional[Union[int, float]]:
-        try:
-            return self.number_one - self.number_two
-        except Exception as e:
-            logging.error(f"Error recieved when calling subtract. {e}")
-    
-calculator = Calculator(5, 20)
-print(f"Addition: {calculator.add()}, Subtraction: {calculator.subtract()}, Division: {calculator.divide()}, Multiplication: {calculator.multiply()} ")
+        return self.number_one - self.number_two
+
+calculator = Calculator.get_numbers()
+print(calculator.add())
+# calculator = Calculator(5, 20)
+# print(f"Addition: {calculator.add()}, Subtraction: {calculator.subtract()}, Division: {calculator.divide()}, Multiplication: {calculator.multiply()} ")

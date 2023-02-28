@@ -19,7 +19,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG,filename='data.log', filemode='a', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
 
-class Book():
+class Book:
     
     def __init__(self, title: str, author: str):
         logging.info(f"Recieved values when creating a book ojbect. title: {title}, author: {author}")
@@ -33,20 +33,14 @@ class Book():
         return cls(title, author)
     
     def __str__(self) -> str:
-        try:
-            return f"Title: {self.title}, Author: {self.author}"
-        except Exception as e:
-            logging.error(f"Error recieved when calling __str__. {e}")
+        return f"Title: {self.title}, Author: {self.author}"
+
     def get_title(self) -> str:
-        try:
-            return f"Title: {self.title}"
-        except Exception as e:
-            logging.error(f"Error recieved when calling get_title. {e}")
+        return f"Title: {self.title}"
+    
     def get_author(self) -> str:
-        try:
-            return f"Author: {self.author}"
-        except Exception as e:
-            logging.error(f"Error recieved when calling get_author. {e}")
+        return f"Author: {self.author}"
+
             
             
 PP = Book("Pride and Prejudice", "Jane Austen")

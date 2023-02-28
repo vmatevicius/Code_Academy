@@ -16,7 +16,7 @@ logging.basicConfig(level=logging.DEBUG,filename='data.log', filemode='a', forma
 
 # {country} has a {smaller / larger} population density than {other_country}
 
-class Country():
+class Country:
     
     def __init__(self,name: str, population: int, area: Union[int,float]):
         logging.info(f"Recieved values when creating a country object. population: {population}, area: {area}")
@@ -43,7 +43,7 @@ class Country():
         except Exception as e:
             logging.error(f"Error recieved when calling is_big. {e}")
             
-    def compare_population_density(self, country: str) -> str:
+    def compare_population_density(self, country: "Country") -> str:
         try:
             if (self.population / self.area) > (country.population / country.area):
                 return f"{self.name} has a higher population density than {country.name}"

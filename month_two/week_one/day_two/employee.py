@@ -6,7 +6,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG,filename='data.log', filemode='a', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
 
-class Employee():
+class Employee:
     
     def __init__(self, first_name: str, last_name: str):
         logging.info(f"Recieved values when creating an employee. first name: {first_name}, last name: {last_name}")
@@ -21,3 +21,5 @@ class Employee():
     
 worker = Employee("Vytautas", "Matevicius")
 print(worker.email)
+other_worker = Employee.get()
+print(other_worker.email)
