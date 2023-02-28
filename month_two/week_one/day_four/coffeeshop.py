@@ -1,21 +1,20 @@
 import logging
-from typing import Union
+from typing import Dict, Union, List
 
 logging.basicConfig(level=logging.DEBUG,filename='data.log', filemode='a', format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
 
-class Restaurant():
+class Restaurant:
     
-    def __init__(self,name :str, drinks_menu: dict,food_menu: dict, orders: list = []):
-        logging.info(f"Recieved values when creating a coffeeshop obj. name: {name}, drinks menu: {drinks_menu}, food menu {food_menu}, orders: {orders}")
+    def __init__(self,name :str, menu: Dict[str, List[Dict[str, Union[int, float]]]], orders: List[str] = []):
+        logging.info(f"Recieved values when creating a coffeeshop obj. name: {name}, menu: {menu}, orders: {orders}")
         self.name = name
-        self.drinks_menu = drinks_menu
-        self.food_menu = food_menu
+        self.menu = menu
         self.orders = orders
         
     def add_order(self, order: str):
         logging.info(f"Recieved values. order {order}")
         #check if item is in the menu
-        if order in self.drinks_menu or order in self.food_menu:
+        if order in self.menu["drinks"] or order in self.menu["foods"]:
             self.orders.append(order)
             return f"Order added!"
         else:
@@ -43,58 +42,53 @@ class Restaurant():
     def due_amount(self) -> Union[int,float]:
         #return total amount for the orders taken
         if self.orders:
-            price = []
-            for k, v in self.food_menu.items():
-                if k in self.orders:
-                    price.append(v)
+            prices = 0
+            for order in self.orders:
+                if order in self.menu["drinks"]:
+                    prices = prices + self.menu["drinks"][order]
                 else:
-                    continue
-            for k, v in self.drinks_menu.items():
-                if k in self.orders:
-                    price.append(v)
-                else:
-                    continue
-            return sum(price)
+                    prices = prices + self.menu["foods"][order]
+            return prices
         else:
             return 0        
         
     def cheapest_item(self) -> str:
         #return the name of the cheapest item on the menu.
-        return f"The cheapest meal is {min(self.food_menu, key=self.food_menu.get)} and the cheapest drink is {min(self.drinks_menu, key=self.drinks_menu.get)}"
+        return f"The cheapest meal is {min(menu['foods'], key=menu['foods'].get)} and the cheapest drink is {min(menu['drinks'], key=menu['drinks'].get)}"
         
     def drinks_only(self) -> str:
         #return names of all drinks available
-        return f"Available drinks are {', '.join(self.drinks_menu.keys())}"
+        return f"Available drinks are {', '.join(self.menu['drinks'].keys())}"
     
     def food_only(self) -> str:
         #return names of all food available
-        return f"Available meals are {', '.join(self.food_menu.keys())}"
+        return f"Available meals are {', '.join(self.menu['foods'].keys())}"
 
 
-drinks = {
-    "orange juice": 1.2,
-    "lemonade": 1,
-    "cranberry juice": 1.1,
-    "pineapple juice": 1.5,
-    "lemon iced tea": 1,
-    "vanilla chai latte": 2.5,
-    "hot chocolate": 3,
-    "iced coffee": 3
+menu = {
+   "drinks": {
+        "orange juice": 1.2,
+        "lemonade": 1.8,
+        "cranberry juice": 1.1,
+        "pineapple juice": 1.5,
+        "lemon iced tea": 1.6,
+        "vanilla chai latte": 2.5,
+        "hot chocolate": 3,
+        "iced coffee": 3
+   },
+    "foods": {
+        "tuna sandwich": 5,
+        "ham and cheese sandwich": 3,
+        "bacon and egg": 3,
+        "steak": 8,
+        "hamburger": 4,
+        "cinnamon roll": 2
+    }
     }
 
-foods = {
-    "tuna sandwich": 5,
-    "ham and cheese sandwich": 3,
-    "bacon and egg": 3,
-    "steak": 8,
-    "hamburger": 4,
-    "cinnamon roll": 2
-    }
-
-coffee_shop = Restaurant("Cheap diner", drinks, foods)
+coffee_shop = Restaurant("Cheap diner", menu)
 print(coffee_shop.cheapest_item())
-print(coffee_shop.add_order("hot cocoa"))
-print(coffee_shop.add_order("iced coffee"))
+print(coffee_shop.add_order("lemonade"))
 print(coffee_shop.add_order("cinnamon roll"))
 print(coffee_shop.add_order("hot chocolate"))
 print(coffee_shop.list_orders())
