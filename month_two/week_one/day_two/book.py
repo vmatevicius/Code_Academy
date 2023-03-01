@@ -26,12 +26,6 @@ class Book:
         self.title = title
         self.author = author
             
-    @classmethod
-    def get_book(cls):
-        title = input("Enter title: ")
-        author =  input("Enter author: ")
-        return cls(title, author)
-    
     def __str__(self) -> str:
         return f"Title: {self.title}, Author: {self.author}"
 
@@ -44,6 +38,4 @@ class Book:
             
             
 PP = Book("Pride and Prejudice", "Jane Austen")
-H = Book.get_book()
-print(H)
 print(PP)
