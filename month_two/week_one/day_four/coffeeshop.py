@@ -72,10 +72,10 @@ class Restaurant:
 
 class CoffeeShop(Restaurant):
     
-    def __init__(self, name: str ,menu, orders: list = []):
-        self.name = name
-        self.menu = menu
-        self.orders = orders
+    def __init__(self, name: str ,menu: Dict[str,int], orders: List[str] = []):
+        self.name: str = name
+        self.menu: Dict[str,int] = menu
+        self.orders: List[str] = orders
     
     def cheapest_item(self) -> str:
         #return the name of the cheapest item on the menu.
