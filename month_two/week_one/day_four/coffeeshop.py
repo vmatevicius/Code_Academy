@@ -132,16 +132,3 @@ print(coffeeshop.cheapest_item())
 # print(coffee_shop.list_orders())
 # print(coffee_shop.food_only())
 # print(coffee_shop.drinks_only())
-
-coffeeshop_menu = {
-   "drinks": {
-        "orange juice": 1.2,
-        "lemonade": 1.8,
-        "cranberry juice": 1.1,
-        "pineapple juice": 1.5,
-        "lemon iced tea": 1.6,
-        "vanilla chai latte": 2.5,
-        "hot chocolate": 3,
-        "iced coffee": 3
-   }
-}
