@@ -176,7 +176,6 @@ class Sudoku:
         return column
     
     def get_sqr(row:int , column:int):
-        
         ...
         
 
