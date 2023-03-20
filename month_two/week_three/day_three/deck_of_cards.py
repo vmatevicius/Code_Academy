@@ -5,7 +5,7 @@
 #     There should be a shuffle method which makes sure the deck of cards has all 52 cards and then rearranges them randomly.
 #     The Card class should have a suit (Hearts, Diamonds, Clubs, Spades) and a value (A,2,3,4,5,6,7,8,9,10,J,Q,K)
 
-from typing import Union
+from typing import Union, List
 from random import randint
 
 
@@ -29,7 +29,7 @@ class DeckOfCards:
             for value in self.VALUES:
                 self.deck.append(Card(suit, value))
 
-    def show_deck(self):
+    def show_deck(self) -> None:
         for card in self.deck:
             print(f"{card.value} of {card.suit}")
 
@@ -42,7 +42,7 @@ class DeckOfCards:
         )
         self.shuffled_deck.remove(self.shuffled_deck[random_index])
 
-    def shuffle(self) -> None:
+    def shuffle(self) -> List[Card]:
         shuffled_deck = []
         random_index = randint(0, 51)
         used_indexes = []
@@ -53,7 +53,7 @@ class DeckOfCards:
             random_index = randint(0, 51)
         return shuffled_deck
 
-    def show_shuffled_deck(self):
+    def show_shuffled_deck(self) -> None:
         for card in self.shuffled_deck:
             print(f"{card.value} of {card.suit}")
 
