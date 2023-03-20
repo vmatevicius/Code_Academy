@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 class CookieJar:
     def __init__(self, capacity: int):
         if capacity < 0:
@@ -5,17 +8,17 @@ class CookieJar:
         self.capacity = capacity
         self.size = 0
 
-    def __str__(self):
+    def __str__(self) -> Optional[str]:
         if self.size > 0:
             return self.size * "🍪"
         return "There are no cookies left :("
 
-    def deposit(self, number_of_cookies):
+    def deposit(self, number_of_cookies) -> None:
         if number_of_cookies > self.capacity:
             raise ValueError("Jar does not have enough space for that many cookies")
         self.size = self.size + number_of_cookies
 
-    def withdraw(self, number_of_cookies):
+    def withdraw(self, number_of_cookies) -> None:
         if number_of_cookies > self.size:
             raise ValueError(
                 "You cannot withdraw more cookies than there is in the jar"

@@ -7,8 +7,10 @@
 # and should implement the convert_to_currency method. The Card class should take the credit limit of the card as input in the constructor,
 # and should implement the convert_to_currency method using the conversion rate to convert the value of the card to the target currency.
 
+from abc import ABC, abstractmethod
 
-class Money:
+
+class Money(ABC):
     def __init__(self, currency: str, value: float) -> None:
         self.currency = currency
         self.value = value
@@ -19,8 +21,9 @@ class Money:
     def get_currency(self) -> str:
         return self.currency
 
+    @abstractmethod
     def convert_to_currency(self, target_currency: str, conversion_rate: float) -> str:
-        raise NotImplementedError
+        pass
 
 
 class Cash(Money):
