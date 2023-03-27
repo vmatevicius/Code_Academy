@@ -1,23 +1,4 @@
-# Cafeteria project : Create an live menu and payment system (a.k.a console program) :
-
-# First the program should ask if table was reserved/ not (Providing your full name) .
-# And then if not would assign you a table (there is a specific number single, double or family tables) .
-# After table is assigned to you, system should show how many free tables are and how which are reserved/occupied.
-# The system must be able to show name/surname of the person of the reserved table (CLI option : enter reserved table nuber ; OUTCOME: Name/Surname/Time Reserved)
-
-# After assigning table, system should show different menu options for breakfast, lunch , dinner , drinks (alcohol.
-# alcohol free), to choose from. Special menu for vegetarian and vegan must be included too in the special menu.
-# All menu items should have weight, preparation time in minutes, calories, and price.
-# I have to have an option to change the order before the payment section. Thus I can delete, add more, update amount of the same order.
-
-# I should be able to choose whatever I want from all menus in one ordering.
-# After I finish, I need to see what I chosen, the full payable amount and approx waiting time for the food to be served
-
-# Add an option to add tips (% from the full cost) to the final bill.
-
-# After the payment , system should generate the receipt (logging).
-
-from typing import Union, List, Dict, Optional
+from typing import Union, Dict, Optional
 import menus as m
 from abc import ABC, abstractmethod
 import json
@@ -51,38 +32,21 @@ class Restaurant(ABC):
     def add_to_order(self) -> None:
         pass
 
-    # @abstractmethod
-    # def remove_from_order(self) -> ...:
-    #     pass
+    @abstractmethod
+    def remove_from_order(self) -> None:
+        pass
 
-    # @abstractmethod
-    # def update_order_quantities(self) -> ...:
-    #     pass
+    @abstractmethod
+    def update_order_quantities(self) -> None:
+        pass
 
-    # @abstractmethod
-    # def show_order_summarized(self) -> ...:
-    #     pass
+    @abstractmethod
+    def show_order_summarized(self) -> None:
+        pass
 
-    # @abstractmethod
-    # def pay_for_order(self) -> ...:
-    #     pass
-
-
-# reservation:
-# check if table reserved ( ask for name)
-# if not assign a table ( let choose from single, double or family tables )
-# implement a function that shows how many free tables and reserved tables there are( tell size of free tables)
-# make a function that shows Name/Surname/Time Reserved after reserved table id is given if user want to see
-
-# ordering:
-# make a function that lets customer choose anything he wishes from menus
-# Give customer options to change the order before payment( delete, add,update amount )
-# after ordering is finished show full cost of the order and approx waiting time
-# add an option to add tips(% from full cost)
-
-# payment:
-# implement payment
-# Log the receipt using loggin
+    @abstractmethod
+    def show_order_cost(self) -> None:
+        pass
 
 
 class Cafeteria(Restaurant):
@@ -103,22 +67,20 @@ class Cafeteria(Restaurant):
         self.reservations = {}
         self.orders = {}
 
-    def check_reservation(self, name: str) -> bool:
-        if name not in self.reservations:
+    def check_reservation(self, full_name: str) -> bool:
+        if full_name not in self.reservations:
             return False
         return True
 
     def assign_table(
         self,
         table_type: str,
-        name: str,
-        surname: str,
+        full_name: str,
         reservation_time: Dict[str, float],
     ) -> Optional[str]:
         if self.tables[table_type] != 0:
             self.reservations = {
-                name: {
-                    "Surname": surname,
+                full_name: {
                     "Reservation time": reservation_time,
                     "Table": table_type,
                 },
@@ -130,20 +92,26 @@ class Cafeteria(Restaurant):
     def show_free_tables(self) -> str:
         if sum(self.tables.values()) == 0:
             return f"There are no empty tables left for today"
-        return f"Free tables left - single: {self.tables['single']}, double: {self.tables['double']}, \
-            family: {self.tables['family']}"
+        return f"Free tables left - single: {self.tables['single']}, double: {self.tables['double']}, family: {self.tables['family']}"
 
     def show_reserved_tables(self) -> str:
+        max_single_tables = 4
+        max_double_tables = 3
+        max_family_tables = 2
         if self.reservations == None:
             return f"There are no reservations made"
-        return f"Single tables reserved: {4 - self.tables['single']}, double: {3 - self.tables['double']}, \
-            family: {2 - self.tables['family']}"
+        return (
+            f"Single tables reserved: {max_single_tables - self.tables['single']}, double:"
+            f"{max_double_tables - self.tables['double']}, family: {max_family_tables - self.tables['family']}"
+        )
 
-    def show_reservation(self, name: str) -> str:
-        if name not in self.reservations:
+    def show_reservation(self, full_name: str) -> str:
+        if full_name not in self.reservations:
             return f"There is no reservation under this name"
-        return f"{name} {self.reservations[name]['surname']} reserved a {self.reservations[name]['Table']} for \
-            {self.reservations[name]['Reservation time']}"
+        return (
+            f"{full_name} {self.reservations[full_name]} reserved a"
+            f" '{self.reservations[full_name]['Table']}' table for {self.reservations[full_name]['Reservation time']} o'clock"
+        )
 
     def add_tips(self, order_cost: float, tip_percentage: int) -> float:
         return order_cost + (order_cost / 100 * tip_percentage)
@@ -153,76 +121,203 @@ class Cafeteria(Restaurant):
 
     def make_order(
         self,
-        name: str,
-        alcohol: List[str] = None,
-        alcohol_free: List[str] = None,
-        foods: List[str] = None,
+        full_name: str,
+        alcohol: Dict[str, int] = None,
+        alcohol_free: Dict[str, int] = None,
+        foods: Dict[str, int] = None,
     ) -> Optional[str]:
         if alcohol == None and foods == None and alcohol_free == None:
             return f"No order has been made"
-        self.orders[name] = {}
+        self.orders[full_name] = {}
         if alcohol == None:
             pass
         else:
-            for order in alcohol:
-                self.orders[name][order] = dict(
-                    self.menu["drinks"]["Alcohol"][order].items()
+            for key, value in alcohol.items():
+                self.orders[full_name][key] = dict(
+                    self.menu["drinks"]["Alcohol"][key].items()
                 )
+                self.orders[full_name][key]["quantity"] = value
         if alcohol_free == None:
             pass
         else:
-            for order in alcohol_free:
-                self.orders[name][order] = dict(
-                    self.menu["drinks"]["Alcohol free"][order].items()
+            for key, value in alcohol_free.items():
+                self.orders[full_name][key] = dict(
+                    self.menu["drinks"]["Alcohol free"][key].items()
                 )
+                self.orders[full_name][key]["quantity"] = value
         if foods == None:
             pass
         else:
             for key in self.menu.keys():
-                for order in foods:
-                    if order not in self.menu[key]:
+                for item, value in foods.items():
+                    if item not in self.menu[key]:
                         continue
                     else:
-                        self.orders[name][order] = dict(self.menu[key][order].items())
+                        self.orders[full_name][item] = dict(
+                            self.menu[key][item].items()
+                        )
+                        self.orders[full_name][item]["quantity"] = value
 
     def add_to_order(
         self,
-        name: str,
-        alcohol: List[str] = None,
-        alcohol_free: List[str] = None,
-        foods: List[str] = None,
+        full_name: str,
+        alcohol: Dict[str, int] = None,
+        alcohol_free: Dict[str, int] = None,
+        foods: Dict[str, int] = None,
     ) -> None:
         if alcohol == None:
             pass
         else:
-            for order in alcohol:
-                self.orders[name][order] = dict(
-                    self.menu["drinks"]["Alcohol"][order].items()
+            for key, value in alcohol.items():
+                self.orders[full_name][key] = dict(
+                    self.menu["drinks"]["Alcohol"][key].items()
                 )
+                self.orders[full_name][key]["quantity"] = value
         if alcohol_free == None:
             pass
         else:
-            for order in alcohol_free:
-                self.orders[name][order] = dict(
-                    self.menu["drinks"]["Alcohol free"][order].items()
+            for key, value in alcohol_free.items():
+                self.orders[full_name][key] = dict(
+                    self.menu["drinks"]["Alcohol free"][key].items()
                 )
+                self.orders[full_name][key]["quantity"] = value
         if foods == None:
             pass
         else:
             for key in self.menu.keys():
-                for order in foods:
-                    if order not in self.menu[key]:
+                for item, value in foods.items():
+                    if item not in self.menu[key]:
                         continue
                     else:
-                        self.orders[name][order] = dict(self.menu[key][order].items())
+                        self.orders[full_name][item] = dict(
+                            self.menu[key][item].items()
+                        )
+                        self.orders[full_name][item]["quantity"] = value
+
+    def remove_from_order(self, full_name: str, what_to_remove: str) -> None:
+        del self.orders[full_name][what_to_remove]
+
+    def update_order_quantities(
+        self,
+        full_name: str,
+        alcohol: Dict[str, int] = None,
+        alcohol_free: Dict[str, int] = None,
+        foods: Dict[str, int] = None,
+    ) -> None:
+        if alcohol == None:
+            pass
+        else:
+            for key, value in alcohol.items():
+                self.orders[full_name][key]["quantity"] = value
+        if alcohol_free == None:
+            pass
+        else:
+            for key, value in alcohol_free.items():
+                self.orders[full_name][key]["quantity"] = value
+        if foods == None:
+            pass
+        else:
+            for key, value in foods.items():
+                self.orders[full_name][key]["quantity"] = value
+
+    def add_to_order_quantities(
+        self,
+        full_name: str,
+        alcohol: Dict[str, int] = None,
+        alcohol_free: Dict[str, int] = None,
+        foods: Dict[str, int] = None,
+    ):
+        if alcohol == None:
+            pass
+        else:
+            for key, value in alcohol.items():
+                self.orders[full_name][key]["quantity"] += value
+        if alcohol_free == None:
+            pass
+        else:
+            for key, value in alcohol_free.items():
+                self.orders[full_name][key]["quantity"] += value
+        if foods == None:
+            pass
+        else:
+            for key, value in foods.items():
+                self.orders[full_name][key]["quantity"] += value
+
+    def subtract_from_order_amounts(
+        self,
+        full_name: str,
+        alcohol: Dict[str, int] = None,
+        alcohol_free: Dict[str, int] = None,
+        foods: Dict[str, int] = None,
+    ):
+        if alcohol == None:
+            pass
+        else:
+            for key, value in alcohol.items():
+                amount = self.orders[full_name][key]["quantity"]
+                self.orders[full_name][key]["quantity"] = amount - value
+                if self.orders[full_name][key]["quantity"] == 0:
+                    del self.orders[full_name][key]
+        if alcohol_free == None:
+            pass
+        else:
+            for key, value in alcohol_free.items():
+                amount = self.orders[full_name][key]["quantity"]
+                self.orders[full_name][key]["quantity"] = amount - value
+                if self.orders[full_name][key]["quantity"] == 0:
+                    del self.orders[full_name][key]
+        if foods == None:
+            pass
+        else:
+            for key, value in foods.items():
+                amount = self.orders[full_name][key]["quantity"]
+                self.orders[full_name][key]["quantity"] = amount - value
+                if self.orders[full_name][key]["quantity"] == 0:
+                    del self.orders[full_name][key]
+
+    def show_order_summarized(self, full_name: str) -> None:
+        total_cost = self.show_order_cost(full_name=full_name)
+        ordered_things = {}
+        for key, value in self.orders[full_name].items():
+            for inner_key, inner_value in self.orders[full_name][key].items():
+                if inner_key == "quantity":
+                    ordered_things[key] = inner_value
+                else:
+                    continue
+        print(f"Total cost is: {total_cost}")
+        print("Your order is:")
+        for key, value in ordered_things.items():
+            print(f"{key}, amount: {value}")
+
+    def show_order_cost(self, full_name: str) -> None:
+        cost = 0
+        for key in self.orders[full_name].keys():
+            quantity = self.orders[full_name][key]["quantity"]
+            cost = cost + (self.orders[full_name][key]["price"] * quantity)
+        return cost
 
 
 hmmm = Cafeteria()
 hmmm.make_order(
-    name="Vadimas",
-    alcohol=["Beer", "Vine"],
-    alcohol_free=["Orange juice"],
-    foods=["Steak", "Fish"],
+    full_name="Vadimas",
+    alcohol={"Beer": 2, "Vine": 1},
+    alcohol_free={"Orange juice": 1},
+    foods={"Steak": 2, "Fish": 1},
 )
-hmmm.add_to_order(name="Vadimas", foods=["Grilled chicken"])
-print(hmmm.orders)
+hmmm.add_to_order_quantities(full_name="Vadimas", alcohol={"Beer": 1, "Vine": 1})
+hmmm.subtract_from_order_amounts(full_name="Vadimas", alcohol={"Beer": 3, "Vine": 2})
+hmmm.show_order_summarized("Vadimas")
+# hmmm.add_to_order(clients_name="Vadimas", foods=["Grilled chicken"])
+# hmmm.remove_from_order(clients_name="Vadimas", what_to_remove="Orange juice")
+# print(hmmm.show_order_cost(full_name="Vadimas"))
+# # print(hmmm.show_order_summarized(clients_name="Vadimas"))
+# print(hmmm.orders)
+# print(hmmm.show_order_cost(clients_name="Vadimas"))
+# print(hmmm.show_free_tables())
+# hmmm.assign_table(
+#     table_type="single", clients_name="Vadimas", surname="Nepaimsi", reservation_time=12
+# )
+# print(hmmm.show_free_tables())
+# print(hmmm.check_reservation(name="Vadimas", surname="Nepaimsi"))
+# print(hmmm.show_reservation(clients_name="Vadimas"))
+# print(hmmm.show_reserved_tables())
