@@ -1,14 +1,5 @@
-from classes import Reservation, Order
+from classes import Reservation, Order, Payment
 from typing import Union, Dict, Optional
-
-
-class Cafeteria:
-    def __init__(self) -> None:
-        pass
-
-    def add_tips(self, tip_percentage: int, order_cost: float = None) -> float:
-        return order_cost + (order_cost / 100 * tip_percentage)
-
 
 hmmm = Order()
 hmmm.make_order(
@@ -23,15 +14,15 @@ hmmm.add_to_order(full_name="Vadimas", foods={"Grilled chicken": 2})
 hmmm.remove_from_order(full_name="Vadimas", what_to_remove="Orange juice")
 hmmm.show_order_summarized(full_name="Vadimas")
 print(hmmm.show_order_cost(full_name="Vadimas"))
-
+print(hmmm.orders)
 print()
 
-hmmmm = Reservation()
-print(hmmmm.show_free_tables())
-hmmmm.assign_table(
-    table_type="single", full_name="Vadimas Nepaimsi", reservation_time=12
-)
-print(hmmmm.show_free_tables())
-print(hmmmm.check_reservation(full_name="Vadimas Nepaimsi"))
-print(hmmmm.show_reservation(full_name="Vadimas Nepaimsi"))
-print(hmmmm.show_reserved_tables())
+# hmmmm = Reservation()
+# print(hmmmm.show_free_tables())
+# hmmmm.assign_table(
+#     table_type="single", full_name="Antanas Nezinosi", reservation_time=12
+# )
+# print(hmmmm.show_free_tables())
+# print(f'table is reserved = {hmmmm.check_reservation(full_name="Antanas Nezinosi")}')
+# print(hmmmm.show_reservation(full_name="Antanas Nezinosi"))
+# print(hmmmm.show_reserved_tables())

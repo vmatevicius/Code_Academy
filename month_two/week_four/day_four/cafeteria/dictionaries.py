@@ -1,4 +1,19 @@
-special_menu = {
+VALID_FOODS = [
+    "Fish",
+    "Egg fried rice",
+    "Beetroot soup",
+    "Salad",
+    "Eggs and bacon",
+    "Oatmeal",
+    "Steak",
+    "Grilled chicken",
+    "Beef burger",
+    "Chicken salad",
+]
+
+VALID_DRINKS = ["Vine", "Beer", "Orange juice", "Cola"]
+
+SPECIAL_MENU = {
     "Vegetarian": {
         "Fish": {
             "weight": "500g",
@@ -29,7 +44,7 @@ special_menu = {
     },
 }
 
-breakfast = {
+BREAKFAST = {
     "Eggs and bacon": {
         "weight": "400g",
         "prep.time": "15min",
@@ -44,7 +59,7 @@ breakfast = {
     },
 }
 
-lunch = {
+LUNCH = {
     "Steak": {
         "weight": "500g",
         "prep.time": "35min",
@@ -59,7 +74,7 @@ lunch = {
     },
 }
 
-dinner = {
+DINNER = {
     "Beef burger": {
         "weight": "400g",
         "prep.time": "25min",
@@ -74,7 +89,7 @@ dinner = {
     },
 }
 
-drinks = {
+DRINKS = {
     "Alcohol": {
         "Vine": {
             "weight": "300ml",
@@ -103,4 +118,21 @@ drinks = {
             "price": 2,
         },
     },
+}
+
+SINGLE_TABLES = {
+    1: "free",
+    2: "free",
+    3: "free",
+    4: "free",
+}
+
+DOUBLE_TABLES = {
+    1: "free",
+    2: "free",
+    3: "free",
+}
+FAMILY_TABLES = {
+    1: "free",
+    2: "free",
 }
