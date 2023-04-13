@@ -52,7 +52,7 @@ from typing import Dict
 
 class ShoppingCart:
     def __init__(self, owners_name: str) -> None:
-        self.owners_name = owners_name
+        self.owners_name: str = owners_name
         self.inventory: Dict[int, str] = {}
 
     def add_item(self, item: str, quantity: int) -> None:
@@ -66,8 +66,10 @@ class ShoppingCart:
             return False
         return True
 
-    def __add__(self, other_cart: "ShoppingCart") -> "ShoppingCart":
-        return ShoppingCart(self.inventory.update(other_cart.inventory))
+    # def __add__(self, other_cart: "ShoppingCart") -> "ShoppingCart":
+    #     return ShoppingCart(
+    #         list(self.inventory.items()) + list(other_cart.inventory.items())
+    #     )
 
     def __lt__(self, other_cart: "ShoppingCart") -> bool:
         if self.inventory < other_cart.inventory:
@@ -83,9 +85,9 @@ class ShoppingCart:
 
 cart = ShoppingCart(owners_name="Antanas")
 other_cart = ShoppingCart(owners_name="Nezinosi")
-cart.add_item(item="Alus", quantity="pakankamai")
-cart.add_item(item="Duona", quantity="1")
-other_cart.add_item(item="Batonas", quantity="visas")
+cart.add_item(item="Alus", quantity=2)
+cart.add_item(item="Duona", quantity=1)
+other_cart.add_item(item="Batonas", quantity=3)
 
 print(cart.inventory)
 print(other_cart.inventory)
@@ -97,5 +99,5 @@ if len(cart) > len(other_cart):
 else:
     print("Second cart has more items")
 
-super_cart = cart + other_cart
-print(super_cart.inventory)
+# super_cart = cart + other_cart
+# print(super_cart.inventory)
