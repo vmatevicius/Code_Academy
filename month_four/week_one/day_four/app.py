@@ -1,4 +1,3 @@
-import modules
 from base import Base
 from database import SqliteDatabase
 from helper_functions import get_valid_number
@@ -20,8 +19,7 @@ while True:
     if user_input == 1:
         username = input("Please enter your username:\n")
         password = getpass.getpass("Please enter your password:\n")
-        user = modules.User(username=username, password=password)
-        db.add_user(user)
+        db.add_user(username=username, password=password)
 
     if user_input == 2:
         username = input("Please enter your username:\n")
@@ -50,7 +48,7 @@ while True:
                     print(f" users {username} tasks are: ")
                     for item in db.get_user_tasks(username):
                         print(
-                            f"task {counter} - {item.task}, completed = {item.completed}"
+                            f"task {counter} - {item.task}, completed = {item.completed}, task id - {item.id}"
                         )
                         counter += 1
 

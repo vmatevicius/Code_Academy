@@ -30,7 +30,6 @@ class Task(Base):
     __tablename__ = "tasks"
     id = Column(Integer, primary_key=True)
     task = Column("task", String)
-    working_on = Column("working on", BOOLEAN, default=True)
     completed = Column("completed", BOOLEAN, default=False)
     user_id = Column(Integer, ForeignKey("users.id"))
     user = relationship("User")
