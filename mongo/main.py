@@ -5,7 +5,7 @@ from pymongo.collection import Collection
 client = MongoClient("mongodb://localhost:27017/")
 db = client["grocery_store"]
 
-# Get all electronic items monetary value made 1 years, 2 months and 12 days from today.
+COLLECTIONS = ["electronics", "food", "pets"]
 
 
 def get_items_sorted_by_date(collection_name: Collection, date: str) -> List:
@@ -21,12 +21,6 @@ def calculate_monetary_value(items: List) -> float:
     return total_value
 
 
-items = get_items_sorted_by_date(collection_name="electronics", date="2022-03-12")
-print(f" monetary value : {calculate_monetary_value(items)}")
-
-# Get average price for all items/categories in the store.
-
-
 def get_all_items_prices(collection_name: Collection) -> List:
     collection = db[collection_name]
     return list(collection.find({}, {"price": 1}))
@@ -39,22 +33,15 @@ def calculate_average_price(prices: List) -> float:
     return round(total_sum / len(prices), 2)
 
 
-electronics = get_all_items_prices(collection_name="electronics")
-food = get_all_items_prices(collection_name="food")
-pets = get_all_items_prices(collection_name="pets")
-all_items = electronics + food + pets
-print(f" average electronic item price: {calculate_average_price(electronics)}")
-print(f" average food item price: {calculate_average_price(food)}")
-print(f" average pet price: {calculate_average_price(pets)}")
-print(f" average price of all items: {calculate_average_price(all_items)}")
-
-
-# Get all items which names starts with letter a, and cost is between 10 and 100.
 def filter_items_by_price_range(
-    collection_name: Collection, value_one: float, value_two: float
+    collection_name: Collection,
+    value_one: float,
+    operator_one: str,
+    value_two: float,
+    operator_two: str,
 ) -> List:
     collection = db[collection_name]
-    query = {"price": {"$lt": value_one, "$gt": value_two}}
+    query = {"price": {operator_one: value_one, operator_two: value_two}}
     return list(collection.find(query))
 
 
@@ -68,20 +55,64 @@ def filter_items_by_first_name_letter(items: List, letter: str) -> List:
     return filtered_items
 
 
-items = filter_items_by_price_range(collection_name="food", value_one=100, value_two=10)
-print(filter_items_by_first_name_letter(items=items, letter="a"))
+def find_items_by_price(collection_name: str, value: int, operator: str) -> List:
+    collection = db[collection_name]
+    query = {"price": {operator: value}}
+    return list(collection.find(query))
+
+
+def find_items_by_quantity(collection_name: str, value: int, operator: str) -> List:
+    collection = db[collection_name]
+    query = {"quantity": {operator: value}}
+    return list(collection.find(query))
+
+
+def count_all_names_from_dict(dictionary: Dict) -> Dict[str, int]:
+    names = {}
+    for item in dictionary:
+        if item["name"] not in names.keys():
+            names.update({item["name"]: 0})
+        else:
+            names[item["name"]] += 1
+    return names
 
 
 # Find all item names (only) for prices > 50 and quantity < 10.
 
-collection = db["electronics"]
-query = {
-    "price": {"$gt": 50},
-    "quantity": {"$lt": 10},
-}
-electronics_items = list(collection.find(query))
-collection = db["food"]
-food_items = list(collection.find(query))
-collection = db["pets"]
-pets = list(collection.find(query))
-all_items = electronics_items + food_items + pets
+for collection_name in COLLECTIONS:
+    by_price = find_items_by_price(
+        collection_name=collection_name, value=50, operator="$gt"
+    )
+    by_quantity = find_items_by_quantity(
+        collection_name=collection_name, value=10, operator="$lt"
+    )
+    all_items = by_price + by_quantity
+
+print(count_all_names_from_dict(all_items))
+
+# Get all items which names starts with letter a, and cost is between 10 and 100.
+
+items = filter_items_by_price_range(
+    collection_name="food",
+    value_one=100,
+    operator_one="$lt",
+    value_two=10,
+    operator_two="$gt",
+)
+print(filter_items_by_first_name_letter(items=items, letter="a"))
+
+# Get average price for all items/categories in the store.
+all_items_prices = []
+average_prices = {}
+for collection_name in COLLECTIONS:
+    items = get_all_items_prices(collection_name=collection_name)
+    average_prices[collection_name] = calculate_average_price(items)
+    all_items_prices = items + all_items_prices
+
+print(f" average prices of each categorie {average_prices}")
+print(f" average price of all items: {calculate_average_price(all_items_prices)}")
+
+# Get all electronic items monetary value made 1 years, 2 months and 12 days from today.
+
+items = get_items_sorted_by_date(collection_name="electronics", date="2022-03-12")
+print(f" monetary value : {calculate_monetary_value(items)}")
