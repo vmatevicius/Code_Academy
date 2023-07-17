@@ -1,2 +1,5 @@
 .venv
 .vscode
+logfile.log
+__pycache__
+task_txt
